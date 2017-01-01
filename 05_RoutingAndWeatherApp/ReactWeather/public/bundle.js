@@ -26482,7 +26482,25 @@
 	var Weather = React.createClass({
 	    displayName: 'Weather',
 
+	    getInitialState: function getInitialState() {
+	        return {
+	            location: 'Austin',
+	            temp: 81
+	        };
+	    },
+	    handleSearch: function handleSearch(location) {
+	        this.setState({
+	            location: location,
+	            temp: 23
+	        });
+	    },
 	    render: function render() {
+	        var _state = this.state,
+	            temp = _state.temp,
+	            location = _state.location; // ES6 Destructuring; Does same as 2 commented lines below
+	        // var location = this.state.location;
+	        // var temp = this.state.temp;
+
 	        return React.createElement(
 	            'div',
 	            null,
@@ -26491,8 +26509,8 @@
 	                null,
 	                'Weather Component'
 	            ),
-	            React.createElement(WeatherForm, null),
-	            React.createElement(WeatherMessage, null)
+	            React.createElement(WeatherForm, { onSearch: this.handleSearch }),
+	            React.createElement(WeatherMessage, { location: location, temp: temp })
 	        );
 	    }
 	});
@@ -26503,32 +26521,41 @@
 /* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var React = __webpack_require__(1);
 
 	var WeatherForm = React.createClass({
-	    displayName: "WeatherForm",
+	    displayName: 'WeatherForm',
 
+	    onFormSubmit: function onFormSubmit(e) {
+	        e.preventDefault();
+	        var location = this.refs.location.value;
+
+	        if (location.length > 0) {
+	            this.refs.location.value = '';
+	            this.props.onSearch(location);
+	        }
+	    },
 	    render: function render() {
 	        return React.createElement(
-	            "div",
+	            'div',
 	            null,
 	            React.createElement(
-	                "form",
-	                null,
+	                'form',
+	                { onSubmit: this.onFormSubmit },
 	                React.createElement(
-	                    "div",
+	                    'div',
 	                    null,
-	                    React.createElement("input", { type: "text", ref: "city", placeholder: "Enter city name" })
+	                    React.createElement('input', { type: 'text', ref: 'location', placeholder: 'Enter city name' })
 	                ),
 	                React.createElement(
-	                    "div",
+	                    'div',
 	                    null,
 	                    React.createElement(
-	                        "button",
+	                        'button',
 	                        null,
-	                        "Get Weather"
+	                        'Get Weather'
 	                    )
 	                )
 	            )
@@ -26550,10 +26577,20 @@
 	    displayName: 'WeatherMessage',
 
 	    render: function render() {
+	        var _props = this.props,
+	            temp = _props.temp,
+	            location = _props.location;
+	        // var location = this.props.location;
+	        // var temp = this.props.temp;
+
 	        return React.createElement(
 	            'p',
 	            null,
-	            'It is 67 in Austin, Tx'
+	            'It is ',
+	            temp,
+	            ' degrees in ',
+	            location,
+	            '.'
 	        );
 	    }
 	});
