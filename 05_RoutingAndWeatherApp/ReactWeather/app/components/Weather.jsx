@@ -6,8 +6,7 @@ var openWeatherMap = require('openWeatherMap');
 var Weather = React.createClass({
     getInitialState: function () {
         return {
-            location: 'Austin',
-            temp: 81
+            isLoading: false
         }
     },
     handleSearch: function (location) {
@@ -16,24 +15,40 @@ var Weather = React.createClass({
         //     temp: 23
         // });
         var that = this;
+
+        this.setState({isLoading: true});
+
         openWeatherMap.getTemp(location).then(function (temp) {
             that.setState({
                 location: location,
-                temp: temp
+                temp: temp,
+                isLoading: false
             });
         }, function (errorMessage) {
+            that.setState({
+                isLoading: false
+            });
             alert(errorMessage);
         });
     },
     render: function () {
-        var {temp, location} = this.state; // ES6 Destructuring; Does same as 2 commented lines below
+        var {isLoading, temp, location} = this.state; // ES6 Destructuring; Does same as 2 commented lines below
         // var location = this.state.location;
         // var temp = this.state.temp;
+
+        function renderMessage () {
+            if (isLoading) {
+               return <h3>Fetching weather...</h3>;
+            } else if (temp && location) {
+                return <WeatherMessage location={location} temp={temp}/>;
+            }
+        }
+
         return (
             <div>
                 <h3>Weather Component</h3>
                 <WeatherForm onSearch={this.handleSearch}/>
-                <WeatherMessage location={location} temp={temp}/>
+                {renderMessage()}
             </div>
         );
     }
