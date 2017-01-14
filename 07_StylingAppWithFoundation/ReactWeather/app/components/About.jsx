@@ -6,8 +6,9 @@ var About = (props) => {
             <h1 className="text-center">About</h1>
             <p>React Weather is all about bringing you up to the minute weather in your area.</p>
             <p>
-                We are powered by the following tools: <hr/>
+                We are powered by the following tools:
             </p>
+            <hr/>
             <ul>
                 <li>
                     <a href='https://facebook.github.io/react/'><em>ReactJS</em></a> - One of the fastest JavaScript Libraries used.
