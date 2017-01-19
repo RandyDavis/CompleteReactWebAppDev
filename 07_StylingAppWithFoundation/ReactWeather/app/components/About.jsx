@@ -11,10 +11,10 @@ var About = (props) => {
             <hr/>
             <ul>
                 <li>
-                    <a href='https://facebook.github.io/react/'><em>ReactJS</em></a> - One of the fastest JavaScript Libraries used.
+                    <a href='https://facebook.github.io/react/' target="_blank"><em>ReactJS</em></a> - One of the fastest JavaScript Libraries used.
                 </li>
                 <li>
-                    <a href="http://openweathermap.org"><em>Open Weather Map</em></a> - An excellent API for all your weather-related needs.
+                    <a href="http://openweathermap.org" target="_blank"><em>Open Weather Map</em></a> - An excellent API for all your weather-related needs.
                 </li>
             </ul>
 
